@@ -1,12 +1,14 @@
 import multiprocessing,time,random
 from multiprocessing import Process, Pipe
-from osim.env import RunEnv
+# from osim.env import RunEnv
+from myRunEnv import myRunEnv
 
 # separate process that holds a separate RunEnv instance.
 # This has to be done since RunEnv() in the same process result in interleaved running of simulations.
 def standalone_headless_isolated(conn):
-    from osim.env import RunEnv
-    e = RunEnv(visualize=False)
+    # from osim.env import RunEnv
+    from myRunEnv import myRunEnv
+    e = myRunEnv(visualize=False)
 
     while True:
         msg = conn.recv()
@@ -20,9 +22,9 @@ def standalone_headless_isolated(conn):
         elif msg[0] == 'step':
             ordi = e.step(msg[1])
             conn.send(ordi)
-        elif msg[0] == 'sample':
-            action = e.action_space.sample()
-            conn.send(action)
+        # elif msg[0] == 'sample':
+            # action = e.action_space.sample()
+            # conn.send(action)
         else:
             conn.close()
             del e
@@ -55,25 +57,3 @@ class ei: # Environment Instance
         self.pc.send(('exit',))
         print('(ei)waiting for join...')
         self.p.join()
-
-counter = 0
-
-
-def f((i,action)):
-    observation, reward, done, info = env[i].step(action)
-    return observation
-
-if __name__ == '__main__':
-    num = 1
-    observation = [0]*num
-    env = [0]*num
-    actions = [None]*num
-
-    for i in range(num):
-        env[i] = ei()
-        observation[i] = env[i].reset(i)
-
-    actions = [env[i].sample() for i in range(num)]
-    pool = multiprocessing.Pool(num)
-    o = pool.map(f,  zip(range(num),actions))
-    print(o)
