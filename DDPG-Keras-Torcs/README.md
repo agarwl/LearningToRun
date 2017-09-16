@@ -1,27 +1,22 @@
-## Using Keras and Deep Deterministic Policy Gradient to play TORCS
+## Using Keras and Deep Deterministic Policy Gradient for NIPS 2017 : Learning To Run
 
 300 lines of python code to demonstrate DDPG with Keras
 
-Please read the following blog for details
+<> Please read the following blog for details
+<> https://yanpanlau.github.io/2016/10/11/Torcs-Keras.html
 
-https://yanpanlau.github.io/2016/10/11/Torcs-Keras.html
-
-![](fast.gif)
 
 # Installation Dependencies:
 
 * Python 2.7
-* Keras 1.1.0
-* Tensorflow r0.10
-* [gym_torcs](https://github.com/ugo-nama-kun/gym_torcs)
+* Keras
+* Tensorflow
 
 # How to Run?
 
 ```
-git clone https://github.com/yanpanlau/DDPG-Keras-Torcs.git
-cd DDPG-Keras-Torcs
-cp *.* ~/gym_torcs
-cd ~/gym_torcs
+git clone https://github.com/theSparta/DDPG-Keras.git
+cd DDPG-Keras
 python ddpg.py 
 ```
 
